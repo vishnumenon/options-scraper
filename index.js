@@ -50,7 +50,8 @@ function addGreeks(priceData, ticker, callback) {
     request(greeksUrl)
         .then(function(body) {
             var $ = cheerio.load(body);
-            var pages = $(".pagerlink").length - 1;
+            var pagerlinks = $(".pagerlink");
+            var pages = parseInt($(pagerlinks[pagerlinks.length - 3]).text());
             getGreeksData(pages, priceData, ticker, greeksUrl, callback);
         });
 }
@@ -92,7 +93,8 @@ function scrapeData(ticker, callback) {
     request(pricesUrl)
         .then(function(body) {
             var $ = cheerio.load(body);
-            var pages = $(".pagerlink").length - 1;
+            var pagerlinks = $(".pagerlink");
+            var pages = parseInt($(pagerlinks[pagerlinks.length - 3]).text());
             getPriceData(pages, ticker, pricesUrl, callback);
         });
 }
